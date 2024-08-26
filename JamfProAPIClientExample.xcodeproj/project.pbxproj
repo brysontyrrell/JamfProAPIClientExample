@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		A2427A662C7D19BC0051B6A1 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = A2427A652C7D19BC0051B6A1 /* OpenAPIRuntime */; };
 		A2427A692C7D19C70051B6A1 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = A2427A682C7D19C70051B6A1 /* OpenAPIURLSession */; };
+		A2427A742C7D21FA0051B6A1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A2427A732C7D21F20051B6A1 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A2427A522C7D192D0051B6A1 /* JamfProAPIClientExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JamfProAPIClientExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2427A732C7D21F20051B6A1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -39,6 +41,7 @@
 		A2427A492C7D192D0051B6A1 = {
 			isa = PBXGroup;
 			children = (
+				A2427A732C7D21F20051B6A1 /* README.md */,
 				A2427A542C7D192D0051B6A1 /* JamfProAPIClientExample */,
 				A2427A532C7D192D0051B6A1 /* Products */,
 			);
@@ -124,6 +127,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2427A742C7D21FA0051B6A1 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
