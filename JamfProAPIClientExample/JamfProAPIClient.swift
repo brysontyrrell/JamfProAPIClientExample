@@ -50,7 +50,7 @@ actor AccessTokenManager {
             return try await activeTokenTask.value
         }
         
-        if let currentToken, !currentToken.isExpired {
+        if let currentToken, currentToken.isExpired {
             return currentToken
         }
         
@@ -58,10 +58,13 @@ actor AccessTokenManager {
             try await requestAccessToken()
         }
         
-        currentToken = try await activeTokenTask!.value
+        guard let newToken = try await activeTokenTask?.value else {
+            throw JamfProAPIClientError.AuthError("Failed to return access token")
+        }
+        currentToken = newToken
         activeTokenTask = nil
 
-        return currentToken!
+        return newToken
     }
     
     func requestAccessToken() async throws -> AccessToken {

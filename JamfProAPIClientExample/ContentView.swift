@@ -57,9 +57,9 @@ struct ContentView: View {
 
             Section {
                 if let computerResults = computerSearchResults?.results {
-                    ForEach(computerResults.sorted(by: { Int($0.id!)! < Int($1.id!)!}), id: \.self) { computer in
+                    ForEach(computerResults.sorted(by: { Int($0.id!)! < Int($1.id!)!})) { computer in
                         VStack(alignment: .leading) {
-                            Text("\(computer.general?.name ?? "Unknown") | \(computer.id ?? "Unknown")")
+                            Text("\(computer.general?.name ?? "Unknown") | \(computer.id!)")
                                 .font(.headline)
                             Text(computer.general?.managementId ?? "Unknown")
                                 .font(.caption)
