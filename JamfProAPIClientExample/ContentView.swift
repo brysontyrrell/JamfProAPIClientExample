@@ -28,23 +28,22 @@ struct ContentView: View {
                             .progressViewStyle(.circular)
                     }
                     
-                    if client != nil {
-                        Button {
-                            Task {
-                                do {
-                                    let accessToken = try await client?.AccessToken()
-                                    UIPasteboard.general.string = accessToken
-                                } catch {
-                                    print(error.localizedDescription)
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text("Get Access Token")
-                                Image(systemName: "doc.on.doc")
+                    Button {
+                        Task {
+                            do {
+                                let accessToken = try await client?.AccessToken()
+                                UIPasteboard.general.string = accessToken
+                            } catch {
+                                print(error.localizedDescription)
                             }
                         }
+                    } label: {
+                        HStack {
+                            Text("Get Access Token")
+                            Image(systemName: "doc.on.doc")
+                        }
                     }
+                    .disabled(client == nil)
                 }
                 
                 Section {
