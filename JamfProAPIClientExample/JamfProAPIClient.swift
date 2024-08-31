@@ -33,15 +33,15 @@ struct AccessToken: Codable {
 
 actor AccessTokenManager {
     private let tokenURL: URL
-    private let clientId: String
+    private let clientID: String
     private let clientSecret: String
     
     var currentToken: AccessToken?
     var activeTokenTask: Task<AccessToken, Error>?
     
-    init(tokenURL: URL, clientId: String, clientSecret: String) {
+    init(tokenURL: URL, clientID: String, clientSecret: String) {
         self.tokenURL = tokenURL
-        self.clientId = clientId
+        self.clientID = clientID
         self.clientSecret = clientSecret
     }
     
@@ -78,7 +78,7 @@ actor AccessTokenManager {
         var body = URLComponents()
         body.queryItems = [
             URLQueryItem(name: "grant_type", value: "client_credentials"),
-            URLQueryItem(name: "client_id", value: clientId),
+            URLQueryItem(name: "client_id", value: clientID),
             URLQueryItem(name: "client_secret", value: clientSecret)
         ]
         request.httpBody = body.query?.data(using: .utf8)
@@ -156,14 +156,16 @@ struct APIClientMiddleware: ClientMiddleware {
 //    }
 //}
 
-struct JamfProAPIClient {
+struct JamfProAPIClient: Equatable {
     let api: Client
     
-    let clientId: String
+    let hostname: String
+    let clientID: String
     private let clientSecret: String
     
     init(hostname: String, clientID: String, clientSecret: String) {
-        self.clientId = clientID
+        self.hostname = hostname
+        self.clientID = clientID
         self.clientSecret = clientSecret
         self.api = Client(
             serverURL: URL(string: "https://\(hostname):443/api")!,
@@ -174,7 +176,7 @@ struct JamfProAPIClient {
                 APIClientMiddleware(
                     accessTokenManager: .init(
                         tokenURL: URL(string: "https://\(hostname):443/api/oauth/token")!,
-                        clientId: clientID,
+                        clientID: clientID,
                         clientSecret: clientSecret
                     )
                 )
@@ -182,10 +184,15 @@ struct JamfProAPIClient {
         )
     }
     
+    static func == (lhs: JamfProAPIClient, rhs: JamfProAPIClient) -> Bool {
+        return lhs.hostname == rhs.hostname && lhs.clientID == rhs.clientID && lhs.clientSecret == rhs.clientSecret
+        
+    }
+    
     func AccessToken() async throws -> String? {
         let response = try await api.AccessTokenRequest(
             body: .urlEncodedForm(.init(
-                client_id: clientId,
+                client_id: clientID,
                 client_secret: clientSecret,
                 grant_type: "client_credentials")
             )
